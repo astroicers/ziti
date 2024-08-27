@@ -7,7 +7,7 @@ ARG ZITI_CLI_IMAGE="docker.io/openziti/ziti-cli"
 ARG TARGETPLATFORM="linux/amd64"
 
 # dependabot bumps this version based on release to Hub
-FROM --platform=${TARGETPLATFORM} openziti/ziti-console-assets:3.4.5 AS ziti-console
+FROM --platform=${TARGETPLATFORM} openziti/ziti-console-assets:3.4.6 AS ziti-console
 
 FROM ${ZITI_CLI_IMAGE}:${ZITI_CLI_TAG}
 
@@ -42,6 +42,7 @@ COPY --from=ziti-console /usr/src/app/dist/app-ziti-console /ziti-console
 RUN mkdir -p /ziti-controller
 RUN chown -R ziggy:ziggy /ziti-controller /ziti-console
 WORKDIR /ziti-controller
+ENV ZITI_HOME=/ziti-controller
 
 # configure logging
 ENV ZITI_TIME_FORMAT=utc
